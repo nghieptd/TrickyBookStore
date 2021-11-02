@@ -25,8 +25,6 @@ namespace TrickyBookStore.App
             var fromDate = new DateTimeOffset(2021, 7, 1, 0, 0, 0, new TimeSpan());
             var toDate = new DateTimeOffset(2021, 7, 1, 0, 0, 0, new TimeSpan());
             payment.GetPaymentAmount(1, fromDate, toDate);
-
-            Console.WriteLine("Hello World!");
         }
     }
 }

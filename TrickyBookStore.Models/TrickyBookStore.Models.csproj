@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseTransaction.cs" />
     <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionPrice.cs" />
     <Compile Include="SubscriptionPriority.cs" />
     <Compile Include="SubscriptionTypes.cs" />
   </ItemGroup>

@@ -29,7 +29,8 @@ namespace TrickyBookStore.Services.Store
                 PriceDetails = new Dictionary<string, double>
                 {
                   
-                }              
+                },
+                BookCategoryId = 2
             },
             new Subscription { Id = 5, SubscriptionType = SubscriptionTypes.CategoryAddicted, Priority = (int)SubscriptionPriority.CategoryAddicted,
                 PriceDetails = new Dictionary<string, double>
