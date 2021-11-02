@@ -4,7 +4,7 @@ using TrickyBookStore.Services.Subscriptions;
 
 namespace TrickyBookStore.Services.Customers
 {
-    internal class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
     {
         ISubscriptionService SubscriptionService { get; }
 

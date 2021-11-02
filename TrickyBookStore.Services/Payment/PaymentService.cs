@@ -6,7 +6,7 @@ using TrickyBookStore.Services.PurchaseTransactions;
 
 namespace TrickyBookStore.Services.Payment
 {
-    internal class PaymentService : IPaymentService
+    public class PaymentService : IPaymentService
     {
         ICustomerService CustomerService { get; }
         IPurchaseTransactionService PurchaseTransactionService { get; }
@@ -20,7 +20,8 @@ namespace TrickyBookStore.Services.Payment
 
         public double GetPaymentAmount(long customerId, DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Some stuff");
+            return 0;
         }
     }
 }

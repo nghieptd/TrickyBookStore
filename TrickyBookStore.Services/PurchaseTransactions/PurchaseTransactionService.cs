@@ -5,7 +5,7 @@ using TrickyBookStore.Services.Books;
 
 namespace TrickyBookStore.Services.PurchaseTransactions
 {
-    internal class PurchaseTransactionService : IPurchaseTransactionService
+    public class PurchaseTransactionService : IPurchaseTransactionService
     {
         IBookService BookService { get; }
 

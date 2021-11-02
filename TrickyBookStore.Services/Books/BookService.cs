@@ -4,7 +4,7 @@ using TrickyBookStore.Models;
 
 namespace TrickyBookStore.Services.Books
 {
-    internal class BookService : IBookService
+    public class BookService : IBookService
     {
         public IList<Book> GetBooks(params long[] ids)
         {
