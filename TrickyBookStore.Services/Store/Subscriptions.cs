@@ -10,25 +10,25 @@ namespace TrickyBookStore.Services.Store
             new Subscription { Id = 1, SubscriptionType = SubscriptionTypes.Paid, Priority = (int)SubscriptionPriority.Paid,
                 PriceDetails = new Dictionary<string, double>
                 {
-                   
+                   { "FixPrice", 50 },
                 }
             },
             new Subscription { Id = 2, SubscriptionType = SubscriptionTypes.Free, Priority = (int)SubscriptionPriority.Free,
                 PriceDetails = new Dictionary<string, double>
                 {
-
+                    { "FixPrice", 0 },
                 }
             },
             new Subscription { Id = 3, SubscriptionType = SubscriptionTypes.Premium, Priority = (int)SubscriptionPriority.Premium,
                 PriceDetails = new Dictionary<string, double>
                 {
-                   
+                   { "FixPrice", 200 },
                 }
             },
             new Subscription { Id = 4, SubscriptionType = SubscriptionTypes.CategoryAddicted, Priority = (int)SubscriptionPriority.CategoryAddicted,
                 PriceDetails = new Dictionary<string, double>
                 {
-                  
+                  { "FixPrice", 75 },
                 },
                 BookCategoryId = 2
             },
