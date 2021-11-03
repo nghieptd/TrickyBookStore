@@ -28,34 +28,30 @@ namespace TrickyBookStore.Services.Payment
             }
             var customer = CustomerService.GetCustomerById(customerId);
 
-            Models.Subscription highestSubscription = null;
+            Models.SubscriptionTypes highestSubscriptionType = Models.SubscriptionTypes.Free;
             var categorialSubscriptions = new List<Models.Subscription>();
             foreach (var subscription in customer.Subscriptions)
             {
-                if (highestSubscription == null)
+                if (highestSubscriptionType < subscription.SubscriptionType)
                 {
-                    highestSubscription = subscription;
-                    continue;
+                    highestSubscriptionType = subscription.SubscriptionType;
                 }
 
-                if (highestSubscription.SubscriptionType < subscription.SubscriptionType)
-                {
-                    highestSubscription = subscription;
-                }
                 if (subscription.SubscriptionType == Models.SubscriptionTypes.CategoryAddicted)
                 {
                     categorialSubscriptions.Add(subscription);
                 }
             }
 
-            switch (highestSubscription.SubscriptionType)
+            switch (highestSubscriptionType)
             {
                 case Models.SubscriptionTypes.Paid:
                     return GetTotalPriceAsPaid(transactions);
                 case Models.SubscriptionTypes.Premium:
                     return GetTotalPriceAsPremium(transactions);
                 case Models.SubscriptionTypes.CategoryAddicted:
-                    return GetTotalPriceAsCategoryAddicted(transactions, categorialSubscriptions.Select(sub => sub.BookCategoryId).ToList());
+                    var categorialIds = categorialSubscriptions.Where(sub => sub.BookCategoryId != null).Cast<int>().ToList();
+                    return GetTotalPriceAsCategoryAddicted(transactions, categorialIds);
                 default:
                     return GetTotalPriceAsFree(transactions);
             }
@@ -65,7 +61,7 @@ namespace TrickyBookStore.Services.Payment
         {
             return transactions.Aggregate(
                 (double)Models.SubscriptionPrice.Free,
-                (total, transaction) => transaction.Book.IsOld ? transaction.Book.Price * 0.9 : transaction.Book.Price
+                (total, transaction) => total + (transaction.Book.IsOld ? transaction.Book.Price * 0.9 : transaction.Book.Price)
             );
         }
         private double GetTotalPriceAsPaid(IList<Models.PurchaseTransaction> transactions)
@@ -116,8 +112,7 @@ namespace TrickyBookStore.Services.Payment
 
             return total;
         }
-
-        private double GetTotalPriceAsCategoryAddicted(IList<Models.PurchaseTransaction> transactions, IList<int?> categoryIds)
+        private double GetTotalPriceAsCategoryAddicted(IList<Models.PurchaseTransaction> transactions, IList<int> categoryIds)
         {
             double total = Models.SubscriptionPrice.CategoryAddicted;
             int newBookCount = 0;

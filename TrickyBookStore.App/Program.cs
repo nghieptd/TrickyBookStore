@@ -29,11 +29,11 @@ namespace TrickyBookStore.App
                 var month = ReadMonth();
                 var year = ReadYear();
 
-                var fromDate = new DateTimeOffset(year, month, 1, 0, 0, 0, new TimeSpan());
-                var toDate = new DateTimeOffset(year, month + 1 > 12 ? 1 : month + 1, 1, 0, 0, 0, new TimeSpan());
+                var fromDate = new DateTimeOffset(new DateTime(year, month, 1));
+                var toDate = fromDate.AddMonths(1).AddDays(-1);
                 var totalPayment = payment.GetPaymentAmount(userId, fromDate, toDate);
                 Console.WriteLine($"=> Total payment: {totalPayment} USD");
-
+                 
                 Console.WriteLine("Press ESC to stop OR press any key to continue.\n");
                 var keyInfo = Console.ReadKey(true);
                 if (keyInfo.Key == ConsoleKey.Escape)
