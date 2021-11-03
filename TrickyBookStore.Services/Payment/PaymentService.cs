@@ -61,7 +61,7 @@ namespace TrickyBookStore.Services.Payment
         {
             return transactions.Aggregate(
                 (double)Models.SubscriptionPrice.Free,
-                (total, transaction) => total + (transaction.Book.IsOld ? transaction.Book.Price * 0.9 : transaction.Book.Price)
+                (total, transaction) => total + (transaction.Book.IsOld ? GetDiscountPrice(transaction.Book.Price, 0.1) : transaction.Book.Price)
             );
         }
         private double GetTotalPriceAsPaid(IList<Models.PurchaseTransaction> transactions)
@@ -73,11 +73,11 @@ namespace TrickyBookStore.Services.Payment
                 var currentBook = transactions[i].Book;
                 if (currentBook.IsOld)
                 {
-                    total += currentBook.Price * 0.05;
+                    total += GetDiscountPrice(currentBook.Price, 0.95);
                 }
                 else if (newBookCount < 3)
                 {
-                    total += currentBook.Price * 0.95;
+                    total += GetDiscountPrice(currentBook.Price, 0.05);
                     newBookCount++;
                 }
                 else
@@ -101,7 +101,7 @@ namespace TrickyBookStore.Services.Payment
                 }
                 else if (newBookCount < 3)
                 {
-                    total += currentBook.Price * 0.85;
+                    total += GetDiscountPrice(currentBook.Price, 0.15);
                     newBookCount++;
                 }
                 else
@@ -131,7 +131,7 @@ namespace TrickyBookStore.Services.Payment
                 }
                 else if (newBookCount < 3)
                 {
-                    total += currentBook.Price * 0.85;
+                    total += GetDiscountPrice(currentBook.Price, 0.15);
                     newBookCount++;
                 }
                 else
@@ -142,5 +142,6 @@ namespace TrickyBookStore.Services.Payment
 
             return total;
         }
+        private double GetDiscountPrice(double basePrice, double discountRatio) => basePrice * (1 - discountRatio);
     }
 }
