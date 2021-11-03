@@ -22,9 +22,90 @@ namespace TrickyBookStore.App
 
             var payment = serviceCollection
                 .GetService<IPaymentService>();
-            var fromDate = new DateTimeOffset(2021, 7, 1, 0, 0, 0, new TimeSpan());
-            var toDate = new DateTimeOffset(2021, 7, 1, 0, 0, 0, new TimeSpan());
-            payment.GetPaymentAmount(1, fromDate, toDate);
+
+            while (true)
+            {
+                var userId = ReadUserId();
+                var month = ReadMonth();
+                var year = ReadYear();
+
+                var fromDate = new DateTimeOffset(year, month, 1, 0, 0, 0, new TimeSpan());
+                var toDate = new DateTimeOffset(year, month + 1 > 12 ? 1 : month + 1, 1, 0, 0, 0, new TimeSpan());
+                var totalPayment = payment.GetPaymentAmount(userId, fromDate, toDate);
+                Console.WriteLine($"=> Total payment: {totalPayment} USD");
+
+                Console.WriteLine("Press ESC to stop OR press any key to continue.\n");
+                var keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+            }
+        }
+        static int ReadUserId()
+        {
+            var id = -1;
+            bool valid = false;
+            do
+            {
+                Console.Write("User ID: ");
+                var stringId = Console.ReadLine();
+                try
+                {
+                    id = int.Parse(stringId);
+                    valid = true;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid ID input. Try again.");
+                }
+            } while (!valid);
+
+            return id;
+        }
+        static int ReadMonth()
+        {
+            var month = 0;
+            bool valid = true;
+            do
+            {
+                Console.Write("Month: ");
+                var stringMonth = Console.ReadLine();
+
+                try
+                {
+                    month = int.Parse(stringMonth);
+                    valid = true;
+                } catch (FormatException)
+                {
+                    Console.WriteLine("Invalid month input (must be between 1 and 12). Try again.");
+                }
+            } while (!valid);
+
+            return month;
+        }
+        static int ReadYear()
+        {
+            var year = 0;
+            bool valid = false;
+
+            do
+            {
+                Console.Write("Year: ");
+                var stringYear = Console.ReadLine();
+
+                try
+                {
+                    year = int.Parse(stringYear);
+                    valid = true;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid year input (must be between 1 and 9999). Try again.");
+                }
+            } while (!valid);
+
+            return year;
         }
     }
 }
