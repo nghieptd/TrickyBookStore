@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookCategory.cs" />
+    <Compile Include="BookDiscount.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseTransaction.cs" />

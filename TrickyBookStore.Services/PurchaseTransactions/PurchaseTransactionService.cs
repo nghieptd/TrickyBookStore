@@ -18,7 +18,8 @@ namespace TrickyBookStore.Services.PurchaseTransactions
         public IList<PurchaseTransaction> GetPurchaseTransactions(long customerId, DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             return Store.PurchaseTransactions.Data
-                .Where(transaction => transaction.CustomerId == customerId && transaction.CreatedDate >= fromDate && transaction.CreatedDate <= toDate) 
+                .Where(transaction => transaction.CustomerId == customerId && transaction.CreatedDate >= fromDate && transaction.CreatedDate <= toDate)
+                .OrderBy(transaction => transaction.CreatedDate)
                 .Select(transaction => {
                     var books = BookService.GetBooks(transaction.BookId);
                     if (books.Count > 0)
